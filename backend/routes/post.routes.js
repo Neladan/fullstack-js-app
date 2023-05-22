@@ -1,21 +1,14 @@
 const express = require("express");
+const { setPosts, getPosts, editPost, deletePost } = require("../Controllers/post.controller");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.json({ message: "Voici les données" });
-});
+router.get("/", getPosts);
 
-router.post("/", (req, res) => {
-    res.json({ message: req.body.message });
-})
+router.post("/", setPosts);
 
-router.put('/:id', (req, res) => {
-    res.json({ messageId: req.params.id})
-})
+router.put('/:id', editPost);
 
-router.delete('/:id', (req, res) => {
-    res.json({ message: "Post supprimé id : " + req.params.id})
-})
+router.delete('/:id', deletePost)
 
 router.patch("/like-post/:id", (req, res) => {
     res.json({ message: "Post liké : id: " + req.params.id })
