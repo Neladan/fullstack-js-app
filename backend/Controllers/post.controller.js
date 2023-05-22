@@ -39,3 +39,27 @@ module.exports.deletePost = async (req, res) => {
     await post.deleteOne();
     res.status(200).json("Message supprimé " + req.params.id)
 }
+
+module.exports.likePost = async (req, res) => {
+    try {
+        await PostModel.findByIdAndUpdate(
+            req.params.id,
+            { $addToSet: { likers: req.body.userId } },
+            { new: true }
+        ).then((data) => res.status(200).send(data))
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
+module.exports.dislikePost = async (req, res) => {
+    try {
+        await PostModel.findByIdAndUpdate(
+            req.params.id,
+            { $pull: { likers: req.body.userId } },
+            { new: true }
+        ).then((data) => res.status(200).send(data))
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
