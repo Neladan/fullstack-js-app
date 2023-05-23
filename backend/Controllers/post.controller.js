@@ -58,8 +58,8 @@ module.exports.dislikePost = async (req, res) => {
             req.params.id,
             { $pull: { likers: req.body.userId } },
             { new: true }
-        ).then((data) => res.status(200).send(data))
-    } catch (error) {
-        res.status(400).json(error)
+      ).then((data) => res.status(200).send(data));
+    } catch (err) {
+      res.status(400).json(err);
     }
 }
